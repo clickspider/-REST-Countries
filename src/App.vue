@@ -1,56 +1,66 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" dark>
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
+    <v-app-bar app color="dark" type="header" class="main-header">
+      <v-container fluid>
+        <div class="d-flex align-center">
+          <v-toolbar-title
+            ><router-link
+              to="/home"
+              class="main-header__link"
+              style="color: currentColor;"
+              >Where in the world?</router-link
+            ></v-toolbar-title
+          >
 
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
+          <v-spacer></v-spacer>
 
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
+          <v-btn
+            target="_blank"
+            text
+            @click="
+              $vuetify.theme.dark
+                ? ($vuetify.theme.dark = false)
+                : ($vuetify.theme.dark = true)
+            "
+          >
+            <v-icon class="main-header__icon">mdi-weather-night</v-icon>
+            <span>Dark Mode</span>
+          </v-btn>
+        </div>
+      </v-container>
     </v-app-bar>
 
     <v-content>
-      <HelloWorld />
+      <router-view :loading="loading"></router-view>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld";
+import { mapActions } from "vuex";
 
 export default {
   name: "App",
 
-  components: {
-    HelloWorld
+  data: () => ({
+    loading: true
+  }),
+
+  created() {
+    setTimeout(() => {
+      if (this.$data.isOnline) {
+        this.getData();
+        this.loading = false;
+      } else {
+        this.loading = false;
+      }
+    }, 2000);
   },
 
-  data: () => ({
-    //
-  })
+  methods: {
+    ...mapActions(["getData"])
+  },
+
+  computed: {}
 };
 </script>

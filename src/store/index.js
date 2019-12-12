@@ -1,11 +1,43 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import axios from "axios";
+import VuexPersist from "vuex-persist";
 
 Vue.use(Vuex);
 
+const vuexLocalStorage = new VuexPersist({
+  key: "store"
+});
+
 export default new Vuex.Store({
-  state: {},
-  mutations: {},
-  actions: {},
-  modules: {}
+  strict: true,
+  plugins: [vuexLocalStorage.plugin],
+  state: {
+    countries: []
+  },
+  mutations: {
+    gotData(state, countries) {
+      state.countries = countries;
+    }
+  },
+  actions: {
+    async getData({ commit }) {
+      try {
+        const GET_COUNTRIES = await axios.get(
+          "https://restcountries.eu/rest/v2/all"
+        );
+
+        const COUNTRIES = GET_COUNTRIES.data;
+
+        commit("gotData", COUNTRIES);
+      } catch (err) {
+        commit("gotData", err);
+      }
+    }
+  },
+  getters: {
+    countries: state => {
+      return state.countries;
+    }
+  }
 });
