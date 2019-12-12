@@ -1,12 +1,8 @@
 .about-section {
-
-    &__text-block {
-
-    }
     
     &__text-container {
-        @media #{$break3},
-        #{$break4} {
+        margin-bottom: 50rem;
+        @media #{$break4} {
             width: 1323.530rem;
         }
     }
@@ -18,10 +14,14 @@
         &-container {
             
 
-            @media #{$break3},
-            #{$break4} {
+            @media #{$break4} {
                 float: left;
                 margin-right: 120rem;
+            }
+
+            @media #{$break3} { 
+                float: left;
+                margin-right: 100rem;
             }
 
             @media #{$break2}, #{$break1} {

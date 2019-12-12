@@ -15,10 +15,19 @@
 
     @media #{$break2}, #{$break3},
     #{$break4} {
-        margin: 80rem 0;
+        
 
         width: 136rem;
         height: 40rem;
+    }
+
+    @media #{$break4} {
+        margin: 80rem 0;
+    }
+
+    @media #{$break2}, #{$break3} {
+        margin: 40rem 0;
+    
     }
 
     @media #{$break1} {
